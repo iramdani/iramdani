@@ -7,9 +7,6 @@ export const metadata: Metadata = {
   description: "Boost your brand with professional Graphic Design and Web Design services by iRamdani.",
 };
 
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -23,9 +20,7 @@ export default function RootLayout({
         <link rel="preload" href="https://cdn.prod.website-files.com/6350808bc45bd0c902af10e6/6855759684592aaffdf5bb32_LabilGroteskVariable-Upright.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
       </head>
       <body className="am-body">
-        <Header />
-        <main>{children}</main>
-        <Footer />
+        {children}
         <Script 
           src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js" 
           strategy="beforeInteractive" 

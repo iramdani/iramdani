@@ -12,13 +12,15 @@ try {
   if (startIndex === -1) throw new Error('am-page-wrapper not found');
   let body = html.substring(startIndex, endIndex);
 
-  // 2. STRIP NAVBAR AND FOOTER (They are now in layout.tsx)
-  // Strip Navbar
-  body = body.replace(/<nav class="am-section is-navbar">[\s\S]*?<\/nav>/, '');
-  // Strip Footer
-  body = body.replace(/<footer class="am-footer">[\s\S]*?<\/footer>/, '');
-  // Strip Progressive Blur (often overlaps with new header)
-  body = body.replace(/<div style="--blur: 2rem; --ratio: 1.9;" class="am-progressive-blur-wrapper">[\s\S]*?<\/div>/, '');
+  // 2. AGGRESSIVE STRIP NAVBAR AND FOOTER
+  // Strip any <nav> tag
+  body = body.replace(/<nav[\s\S]*?<\/nav>/g, '');
+  // Strip any <footer> tag
+  body = body.replace(/<footer[\s\S]*?<\/footer>/g, '');
+  // Strip specific black footer section if it's a div
+  body = body.replace(/<div class=\"am-section am-is-black-bg\">[\s\S]*?<\/div><\/div>/g, '');
+  // Strip Progressive Blur
+  body = body.replace(/<div style=\"--blur: 2rem; --ratio: 1.9;\" class=\"am-progressive-blur-wrapper\">[\s\S]*?<\/div>/g, '');
 
   // 3. Fix HTML Entities in scripts (&amp;&amp; -> &&)
   body = body.replace(/&amp;&amp;/g, '&&');
@@ -109,8 +111,8 @@ export default function Home() {
 }
 `;
 
-  fs.writeFileSync('D:/OneDrive/Website/iRamdani/src/app/page.tsx', tsxContent);
-  console.log('DONE: page.tsx cleaned and updated.');
+  fs.writeFileSync('D:/OneDrive/Website/iRamdani/src/app/(main)/page.tsx', tsxContent);
+  console.log('DONE: (main)/page.tsx cleaned and updated.');
 } catch (err) {
   console.error('ERROR:', err);
 }
