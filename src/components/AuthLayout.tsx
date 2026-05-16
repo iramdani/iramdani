@@ -1,86 +1,108 @@
 "use client";
-import React from 'react';
+import React from "react";
+import Link from "next/link";
 
 interface AuthLayoutProps {
   children: React.ReactNode;
   title: string;
   subtitle: string;
-  illustrationSrc?: string;
-  footerText?: React.ReactNode;
+  footer?: React.ReactNode;
 }
 
-export default function AuthLayout({ children, title, subtitle, illustrationSrc, footerText }: AuthLayoutProps) {
+export default function AuthLayout({ children, title, subtitle, footer }: AuthLayoutProps) {
   return (
-    <div className="min-h-screen bg-[var(--surface-canvas-white)] flex flex-row overflow-hidden text-[var(--color-midnight-ink)] font-[var(--font-labil-grotesk-variable)]">
-      {/* Left Column: Form Content */}
-      <div className="w-full lg:w-[45%] flex flex-col p-8 lg:p-12 justify-between">
-        <div className="mb-12">
-          <a href="/" className="inline-block">
-             <div className="text-[24px] font-bold tracking-[-0.26px] text-[var(--color-midnight-ink)] flex items-center">
-                iRamdani
-             </div>
-          </a>
+    <div className="ir-auth-layout">
+      {/* Left: Form */}
+      <div className="ir-auth-left">
+        {/* Logo */}
+        <div style={{ marginBottom: "auto" }}>
+          <Link href="/" style={{ fontSize: "18px", fontWeight: "700", color: "var(--color-midnight-ink)", textDecoration: "none" }}>
+            iRamdani
+          </Link>
         </div>
 
-        <div className="max-w-[400px] mx-auto w-full flex flex-col gap-[var(--spacing-36)]">
-          <div className="flex flex-col gap-[var(--spacing-8)]">
-            <h1 className="text-[var(--text-heading-lg)] font-bold tracking-[var(--tracking-heading-lg)] leading-[var(--leading-heading-lg)]">
+        {/* Form area */}
+        <div style={{ maxWidth: "360px", width: "100%", margin: "0 auto", padding: "48px 0" }}>
+          <div style={{ marginBottom: "32px" }}>
+            <h1 style={{
+              fontSize: "var(--text-heading-lg)",
+              fontWeight: "700",
+              letterSpacing: "var(--tracking-heading-lg)",
+              lineHeight: "var(--leading-heading-lg)",
+              color: "var(--color-midnight-ink)",
+              margin: "0 0 10px",
+            }}>
               {title}
             </h1>
-            <p className="text-[var(--color-muted-ash)] text-[var(--text-body)] leading-[var(--leading-body)] tracking-[var(--tracking-body)]">
+            <p style={{ fontSize: "var(--text-body)", color: "var(--color-muted-ash)", margin: 0, lineHeight: "var(--leading-body)" }}>
               {subtitle}
             </p>
           </div>
 
-          <div className="flex flex-col gap-[var(--spacing-24)]">
-            {children}
-          </div>
+          {children}
 
-          <div className="h-[1px] bg-[var(--color-midnight-ink)] opacity-[0.08] w-full" />
-
-          <div className="flex flex-col gap-[var(--spacing-16)]">
-            {footerText}
-          </div>
+          {footer && (
+            <>
+              <hr className="ir-divider" style={{ margin: "28px 0" }} />
+              <div style={{ fontSize: "var(--text-body)", color: "var(--color-muted-ash)" }}>
+                {footer}
+              </div>
+            </>
+          )}
         </div>
 
-        <div className="mt-12 flex flex-row justify-between text-[var(--color-muted-ash)] text-[10px] uppercase tracking-widest font-bold">
-          <p>© {new Date().getFullYear()} iRamdani</p>
-          <a href="mailto:support@iramdani.id" className="hover:text-[var(--color-midnight-ink)] transition-all">Customer support</a>
+        {/* Footer */}
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11px", color: "var(--color-muted-ash)", fontWeight: "600", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+          <span>© {new Date().getFullYear()} iRamdani</span>
+          <a href="mailto:support@iramdani.id" style={{ color: "var(--color-muted-ash)", textDecoration: "none" }}>Support</a>
         </div>
       </div>
 
-      {/* Right Column: Premium Visual Side */}
-      <div className="hidden lg:flex flex-1 bg-[var(--color-midnight-ink)] relative items-center justify-center p-12 overflow-hidden">
-        {/* Abstract Dynamic Gradient (from design.md) */}
-        <div 
-          className="absolute inset-0 opacity-80"
-          style={{
-            background: 'var(--gradient-phoenix-orange)',
-            filter: 'blur(80px)'
-          }}
-        />
-        
-        <div className="relative z-10 w-full max-w-[600px] flex flex-col gap-[var(--spacing-48)]">
-          <div className="rounded-[var(--radius-xl)] overflow-hidden shadow-[var(--shadow-xl-2)] border border-white/10">
-            <img 
-              src={illustrationSrc || "https://storage.googleapis.com/assets.amplemarket.com/assets/images/login_side.avif"} 
-              alt="iRamdani Platform" 
-              className="w-full h-auto" 
-            />
+      {/* Right: Visual panel */}
+      <div className="ir-auth-right">
+        <div className="ir-auth-gradient" />
+        <div style={{ position: "relative", zIndex: 1, maxWidth: "520px", width: "100%", display: "flex", flexDirection: "column", gap: "32px" }}>
+          {/* Mock product screenshot */}
+          <div style={{
+            background: "rgba(255,255,255,0.07)",
+            border: "1px solid rgba(255,255,255,0.12)",
+            borderRadius: "16px",
+            padding: "24px",
+            backdropFilter: "blur(8px)",
+          }}>
+            <div style={{ display: "flex", gap: "8px", marginBottom: "20px" }}>
+              {["#ff5f56","#febc2e","#28c840"].map((c, i) => (
+                <div key={i} style={{ width: "10px", height: "10px", borderRadius: "50%", background: c }} />
+              ))}
+            </div>
+            {[80, 55, 95, 70, 60].map((w, i) => (
+              <div key={i} style={{
+                height: "10px",
+                width: `${w}%`,
+                background: "rgba(255,255,255,0.12)",
+                borderRadius: "6px",
+                marginBottom: "12px",
+              }} />
+            ))}
           </div>
 
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[var(--radius-2xl)] p-10 flex flex-col items-center text-center gap-[var(--spacing-24)]">
-            <div className="bg-[var(--color-engagement-gold)] text-[var(--color-midnight-ink)] text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">
-              AI-POWERED
+          {/* Quote card */}
+          <div style={{
+            background: "rgba(255,255,255,0.07)",
+            border: "1px solid rgba(255,255,255,0.1)",
+            borderRadius: "16px",
+            padding: "28px",
+            backdropFilter: "blur(8px)",
+          }}>
+            <div style={{ display: "inline-flex", background: "var(--color-engagement-gold)", color: "var(--color-midnight-ink)", fontSize: "10px", fontWeight: "700", padding: "4px 10px", borderRadius: "100px", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "16px" }}>
+              Premium
             </div>
-            <h2 className="text-[var(--text-heading)] font-bold text-white tracking-[var(--tracking-heading)]">Automate your Sales Engine</h2>
-            <p className="text-white/70 text-[var(--text-subheading)] leading-[var(--leading-subheading)]">
-              Build end-to-end workflows that eliminate manual tasks and keep your team laser-focused on winning.
+            <p style={{ fontSize: "20px", fontWeight: "700", color: "white", margin: "0 0 12px", lineHeight: 1.2, letterSpacing: "-0.3px" }}>
+              Elevate your brand with professional design
             </p>
-            <a href="/demo" className="flex items-center gap-2 bg-white text-[var(--color-midnight-ink)] font-bold py-3 px-8 rounded-[var(--radius-buttons)] hover:bg-[var(--color-whisper-gray)] transition-all shadow-[var(--shadow-subtle-3)]">
-              <span>Learn more</span>
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-            </a>
+            <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)", margin: 0, lineHeight: 1.5 }}>
+              From logos to full websites — crafted with precision and delivered with care.
+            </p>
           </div>
         </div>
       </div>

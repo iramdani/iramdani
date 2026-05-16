@@ -1,103 +1,108 @@
 "use client";
-
 import { useState } from "react";
 import Link from "next/link";
-import { Trash2, ArrowRight } from "lucide-react";
+import { Trash2, ArrowRight, ShoppingCart } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
+const INITIAL_CART = [
+  { id: 1, name: "Premium Logo Design", price: 299, quantity: 1, category: "Graphic Design" },
+  { id: 2, name: "Landing Page Development", price: 899, quantity: 1, category: "Web Design" },
+];
+
 export default function CartPage() {
-  const [cartItems, setCartItems] = useState([
-    { id: 1, name: "Premium Logo Design", price: 299, quantity: 1, category: "Graphic Design" },
-    { id: 2, name: "Landing Page Development", price: 899, quantity: 1, category: "Web Design" }
-  ]);
-
-  const removeItem = (id: number) => {
-    setCartItems(cartItems.filter(item => item.id !== id));
-  };
-
+  const [cartItems, setCartItems] = useState(INITIAL_CART);
   const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   return (
     <>
       <Header />
-      <div className="min-h-screen bg-[var(--color-whisper-gray)] pt-40 pb-24 px-4 sm:px-6 lg:px-8 font-[var(--font-labil-grotesk-variable)] animate-in fade-in duration-500">
-        <div className="max-w-4xl mx-auto">
-        <div className="mb-12 text-center md:text-left">
-          <h1 className="text-[var(--text-heading-lg)] font-bold text-[var(--color-midnight-ink)] mb-3 tracking-[var(--tracking-heading-lg)] leading-[var(--leading-heading-lg)]">Your Cart</h1>
-          <p className="text-[var(--color-muted-ash)] text-[var(--text-subheading)]">Review your selected services before checkout.</p>
-        </div>
+      <div style={{ minHeight: "100vh", background: "var(--color-whisper-gray)", paddingTop: "120px", paddingBottom: "96px" }}>
+        <div className="ir-container">
+          {/* Page header */}
+          <div className="ir-page-header">
+            <h1 className="ir-page-title">Your Cart</h1>
+            <p className="ir-page-subtitle">Review your selected services before checkout.</p>
+          </div>
 
-        {cartItems.length > 0 ? (
-          <div className="flex flex-col md:flex-row gap-8 items-start">
-            <div className="flex-1 space-y-6">
-              {cartItems.map((item) => (
-                <div key={item.id} className="bg-[var(--surface-canvas-white)] border border-[var(--color-midnight-ink)] border-opacity-[0.08] rounded-[var(--radius-xl)] p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-subtle-3)] transition-all">
-                  <div>
-                    <span className="text-[10px] font-bold text-[var(--color-intelligence-blue)] uppercase tracking-widest mb-2 block">
-                      {item.category}
-                    </span>
-                    <h3 className="text-[20px] font-bold text-[var(--color-midnight-ink)] tracking-[-0.2px]">{item.name}</h3>
+          {cartItems.length > 0 ? (
+            <div style={{ display: "flex", gap: "28px", alignItems: "flex-start", flexWrap: "wrap" }}>
+              {/* Items */}
+              <div style={{ flex: 1, minWidth: "280px", display: "flex", flexDirection: "column", gap: "12px" }}>
+                {cartItems.map((item) => (
+                  <div key={item.id} className="ir-card" style={{ padding: "24px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "16px", flexWrap: "wrap" }}>
+                    <div>
+                      <span style={{ fontSize: "10px", fontWeight: "700", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--color-intelligence-blue)", display: "block", marginBottom: "6px" }}>
+                        {item.category}
+                      </span>
+                      <h3 style={{ margin: 0, fontSize: "18px", fontWeight: "700", color: "var(--color-midnight-ink)" }}>
+                        {item.name}
+                      </h3>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+                      <span style={{ fontSize: "22px", fontWeight: "700", color: "var(--color-midnight-ink)" }}>
+                        ${item.price}
+                      </span>
+                      <button
+                        onClick={() => setCartItems((c) => c.filter((i) => i.id !== item.id))}
+                        style={{ padding: "8px", background: "none", border: "none", cursor: "pointer", color: "var(--color-muted-ash)", borderRadius: "8px", display: "flex" }}
+                        onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(225,101,64,0.08)"; e.currentTarget.style.color = "var(--color-leadgen-red)"; }}
+                        onMouseLeave={(e) => { e.currentTarget.style.background = "none"; e.currentTarget.style.color = "var(--color-muted-ash)"; }}
+                      >
+                        <Trash2 size={18} />
+                      </button>
+                    </div>
                   </div>
-                  
-                  <div className="flex items-center gap-8 w-full sm:w-auto justify-between sm:justify-end mt-4 sm:mt-0">
-                    <span className="text-[24px] font-bold text-[var(--color-midnight-ink)] tracking-[-0.26px]">${item.price}</span>
-                    <button 
-                      onClick={() => removeItem(item.id)}
-                      className="p-3 text-[var(--color-muted-ash)] hover:text-[var(--color-leadgen-red)] hover:bg-red-50 rounded-[var(--radius-lg)] transition-all"
-                    >
-                      <Trash2 size={20} />
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
 
-            <div className="w-full md:w-80 flex-shrink-0">
-              <div className="bg-[var(--surface-canvas-white)] border border-[var(--color-midnight-ink)] border-opacity-[0.08] rounded-[var(--radius-xl)] p-8 sticky top-32 shadow-[var(--shadow-xl)]">
-                <h3 className="text-[var(--text-heading-sm)] font-bold text-[var(--color-midnight-ink)] mb-8 tracking-[var(--tracking-heading-sm)]">Summary</h3>
-                
-                <div className="space-y-6 mb-8">
-                  <div className="flex justify-between text-[var(--color-muted-ash)] text-sm font-medium">
-                    <span>Subtotal</span>
-                    <span className="text-[var(--color-midnight-ink)] font-bold">${subtotal}</span>
+              {/* Summary */}
+              <div style={{ width: "300px", flexShrink: 0 }}>
+                <div className="ir-card" style={{ padding: "28px", position: "sticky", top: "120px", boxShadow: "var(--shadow-xl)" }}>
+                  <h3 style={{ margin: "0 0 24px", fontSize: "var(--text-heading-sm)", fontWeight: "700", color: "var(--color-midnight-ink)" }}>
+                    Summary
+                  </h3>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "14px", marginBottom: "20px" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: "14px" }}>
+                      <span style={{ color: "var(--color-muted-ash)" }}>Subtotal</span>
+                      <span style={{ fontWeight: "600", color: "var(--color-midnight-ink)" }}>${subtotal}</span>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: "14px" }}>
+                      <span style={{ color: "var(--color-muted-ash)" }}>Tax</span>
+                      <span style={{ color: "var(--color-muted-ash)" }}>At checkout</span>
+                    </div>
                   </div>
-                  <div className="flex justify-between text-[var(--color-muted-ash)] text-sm font-medium">
-                    <span>Tax</span>
-                    <span>Calculated at checkout</span>
-                  </div>
-                  <div className="h-[1px] bg-[var(--color-midnight-ink)] opacity-[0.08] my-6"></div>
-                  <div className="flex justify-between text-[var(--color-midnight-ink)] font-bold text-xl tracking-tight">
+                  <hr className="ir-divider" style={{ margin: "0 0 20px" }} />
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "20px", fontWeight: "700", color: "var(--color-midnight-ink)", marginBottom: "24px" }}>
                     <span>Total</span>
                     <span>${subtotal}</span>
                   </div>
+                  <Link href="/checkout" className="ir-button ir-button-primary" style={{ width: "100%", justifyContent: "center" }}>
+                    Proceed to Checkout
+                    <ArrowRight size={16} />
+                  </Link>
                 </div>
-
-                <Link 
-                  href="/checkout"
-                  className="w-full flex items-center justify-center gap-2 bg-[var(--color-midnight-ink)] text-[var(--surface-canvas-white)] font-bold rounded-[var(--radius-buttons)] px-6 py-4 hover:opacity-90 transition-all shadow-[var(--shadow-subtle-3)]"
-                >
-                  Checkout
-                  <ArrowRight size={20} />
-                </Link>
               </div>
             </div>
-          </div>
-        ) : (
-          <div className="text-center py-24 bg-[var(--surface-canvas-white)] border border-[var(--color-midnight-ink)] border-opacity-[0.08] rounded-[var(--radius-xl)] shadow-[var(--shadow-sm)]">
-            <h3 className="text-[var(--text-heading-sm)] font-bold text-[var(--color-midnight-ink)] mb-4 tracking-[var(--tracking-heading-sm)]">Your cart is empty</h3>
-            <p className="text-[var(--color-muted-ash)] text-[var(--text-subheading)] mb-10">Looks like you haven't added any services yet.</p>
-            <Link 
-              href="/#services"
-              className="inline-flex items-center gap-2 bg-[var(--color-midnight-ink)] text-[var(--surface-canvas-white)] font-bold rounded-[var(--radius-buttons)] px-8 py-4 hover:opacity-90 transition-all shadow-[var(--shadow-subtle-3)]"
-            >
-              Browse Services
-            </Link>
-          </div>
-        )}
+          ) : (
+            <div className="ir-card" style={{ padding: "80px 40px", textAlign: "center" }}>
+              <div style={{ marginBottom: "20px", color: "var(--color-light-taupe)" }}>
+                <ShoppingCart size={48} style={{ margin: "0 auto", opacity: 0.5 }} />
+              </div>
+              <h3 style={{ margin: "0 0 8px", fontSize: "var(--text-heading-sm)", fontWeight: "700", color: "var(--color-midnight-ink)" }}>
+                Your cart is empty
+              </h3>
+              <p style={{ margin: "0 0 32px", color: "var(--color-muted-ash)" }}>
+                You haven't added any services yet.
+              </p>
+              <Link href="/#services" className="ir-button ir-button-primary">
+                Browse Services
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
-    <Footer />
+      <Footer />
     </>
   );
 }

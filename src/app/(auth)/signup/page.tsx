@@ -1,57 +1,52 @@
 "use client";
-import React from 'react';
-import AuthLayout from '@/components/AuthLayout';
+import AuthLayout from "@/components/AuthLayout";
+import Link from "next/link";
 
 export default function SignupPage() {
   return (
     <AuthLayout
-      title="Start your trial"
-      subtitle="Join thousands of teams scaling their revenue with iRamdani."
-      footerText={
-        <div>
-          <p className="font-bold text-[14px] mb-1">Already have an account?</p>
-          <p className="text-[var(--color-muted-ash)] text-[14px]">
-            <a href="/login" className="text-[var(--color-midnight-ink)] font-bold hover:underline">Log in</a> to your account
-          </p>
-        </div>
+      title="Start for free"
+      subtitle="Join thousands of creators and businesses scaling with iRamdani."
+      footer={
+        <p style={{ margin: 0 }}>
+          Already have an account?{" "}
+          <Link href="/login" style={{ color: "var(--color-midnight-ink)", fontWeight: "600", textDecoration: "underline" }}>
+            Sign in
+          </Link>
+        </p>
       }
     >
-      <form className="flex flex-col gap-[var(--spacing-24)]" action="#" method="post">
-        <div className="flex flex-col gap-[var(--spacing-20)]">
-          <div className="flex flex-col gap-[var(--spacing-8)]">
-            <label className="text-[var(--color-muted-ash)] text-[10px] font-bold uppercase tracking-widest">
-              Full Name
-            </label>
-            <input 
-              type="text" 
-              name="user[name]" 
-              placeholder="Enter your full name" 
-              className="w-full bg-[var(--surface-canvas-white)] border border-[var(--color-midnight-ink)] border-opacity-10 rounded-[var(--radius-inputs)] px-4 py-3 focus:outline-none focus:border-opacity-30 transition-all text-[var(--color-midnight-ink)]"
-              required
-            />
+      <form style={{ display: "flex", flexDirection: "column", gap: "20px" }} action="#" method="post">
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+          <div>
+            <label className="ir-label">First name</label>
+            <input type="text" name="first_name" placeholder="John" className="ir-input" required />
           </div>
-
-          <div className="flex flex-col gap-[var(--spacing-8)]">
-            <label className="text-[var(--color-muted-ash)] text-[10px] font-bold uppercase tracking-widest">
-              Work email
-            </label>
-            <input 
-              type="email" 
-              name="user[email]" 
-              placeholder="Enter work email" 
-              className="w-full bg-[var(--surface-canvas-white)] border border-[var(--color-midnight-ink)] border-opacity-10 rounded-[var(--radius-inputs)] px-4 py-3 focus:outline-none focus:border-opacity-30 transition-all text-[var(--color-midnight-ink)]"
-              required
-            />
+          <div>
+            <label className="ir-label">Last name</label>
+            <input type="text" name="last_name" placeholder="Doe" className="ir-input" required />
           </div>
         </div>
 
-        <button className="bg-[var(--color-midnight-ink)] text-[var(--surface-canvas-white)] font-bold py-3 px-6 rounded-[var(--radius-buttons)] flex items-center justify-between hover:opacity-90 transition-all shadow-[var(--shadow-subtle-3)]">
-          <span>Create Account</span>
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        <div>
+          <label className="ir-label">Work email</label>
+          <input type="email" name="email" placeholder="you@company.com" className="ir-input" required />
+        </div>
+
+        <div>
+          <label className="ir-label">Password</label>
+          <input type="password" name="password" placeholder="Min. 8 characters" className="ir-input" required />
+        </div>
+
+        <button type="submit" className="ir-button ir-button-primary" style={{ width: "100%", justifyContent: "center" }}>
+          Create account
         </button>
 
-        <p className="text-[12px] text-[var(--color-muted-ash)] text-center">
-          By signing up, you agree to our <a href="/terms" className="underline hover:text-[var(--color-midnight-ink)]">Terms</a> and <a href="/privacy" className="underline hover:text-[var(--color-midnight-ink)]">Privacy Policy</a>.
+        <p style={{ fontSize: "12px", color: "var(--color-muted-ash)", textAlign: "center", margin: 0 }}>
+          By signing up you agree to our{" "}
+          <Link href="/terms" style={{ color: "var(--color-midnight-ink)", textDecoration: "underline" }}>Terms</Link>
+          {" "}and{" "}
+          <Link href="/privacy" style={{ color: "var(--color-midnight-ink)", textDecoration: "underline" }}>Privacy Policy</Link>.
         </p>
       </form>
     </AuthLayout>

@@ -1,39 +1,40 @@
 "use client";
-
 import { useState } from "react";
 import Link from "next/link";
-import { Check, ShieldCheck } from "lucide-react";
+import { ShieldCheck, Check } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+
+const ORDER_ITEMS = [
+  { name: "Premium Logo Design", qty: 1, price: 299 },
+  { name: "Landing Page Development", qty: 1, price: 899 },
+];
 
 export default function CheckoutPage() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const total = ORDER_ITEMS.reduce((a, i) => a + i.price, 0);
 
-  const handleCheckout = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false);
-      setSuccess(true);
-    }, 2000);
+    setTimeout(() => { setLoading(false); setSuccess(true); }, 2000);
   };
 
   if (success) {
     return (
-      <div className="min-h-screen bg-[var(--color-whisper-gray)] flex items-center justify-center p-4 font-[var(--font-labil-grotesk-variable)]">
-        <div className="max-w-md w-full bg-[var(--surface-canvas-white)] border border-[var(--color-midnight-ink)] border-opacity-[0.08] rounded-[var(--radius-xl)] p-12 text-center shadow-[var(--shadow-xl-2)]">
-          <div className="w-20 h-20 bg-[var(--color-deliver-green)] bg-opacity-10 text-[var(--color-deliver-green)] rounded-full flex items-center justify-center mx-auto mb-8">
-            <Check size={40} />
+      <div style={{ minHeight: "100vh", background: "var(--color-whisper-gray)", display: "flex", alignItems: "center", justifyContent: "center", padding: "24px" }}>
+        <div className="ir-card" style={{ maxWidth: "420px", width: "100%", padding: "56px 40px", textAlign: "center", boxShadow: "var(--shadow-xl-2)" }}>
+          <div style={{ width: "64px", height: "64px", borderRadius: "50%", background: "rgba(71,208,150,0.12)", color: "var(--color-deliver-green)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 24px" }}>
+            <Check size={32} />
           </div>
-          <h2 className="text-[var(--text-heading)] font-bold text-[var(--color-midnight-ink)] mb-4 tracking-[var(--tracking-heading)]">Order Confirmed!</h2>
-          <p className="text-[var(--color-muted-ash)] text-[16px] mb-10 leading-relaxed font-medium">Thank you for your purchase. We've sent a confirmation email with details about your next steps.</p>
-          <Link 
-            href="/dashboard"
-            className="block w-full bg-[var(--color-midnight-ink)] text-[var(--surface-canvas-white)] font-bold rounded-[var(--radius-buttons)] px-6 py-4 hover:opacity-90 transition-all shadow-[var(--shadow-subtle-3)]"
-          >
+          <h2 style={{ margin: "0 0 12px", fontSize: "var(--text-heading)", fontWeight: "700", color: "var(--color-midnight-ink)" }}>
+            Order Confirmed!
+          </h2>
+          <p style={{ margin: "0 0 36px", color: "var(--color-muted-ash)", lineHeight: 1.5 }}>
+            Thank you for your purchase. We've sent you a confirmation email with all the details.
+          </p>
+          <Link href="/dashboard" className="ir-button ir-button-primary" style={{ width: "100%", justifyContent: "center" }}>
             Go to Dashboard
           </Link>
         </div>
@@ -44,121 +45,114 @@ export default function CheckoutPage() {
   return (
     <>
       <Header />
-      <div className="min-h-screen bg-[var(--color-whisper-gray)] pt-40 pb-24 px-4 sm:px-6 lg:px-8 font-[var(--font-labil-grotesk-variable)] animate-in fade-in duration-500">
-        <div className="max-w-6xl mx-auto">
-        <div className="mb-12">
-          <h1 className="text-[var(--text-heading-lg)] font-bold text-[var(--color-midnight-ink)] mb-3 tracking-[var(--tracking-heading-lg)] leading-[var(--leading-heading-lg)]">Checkout</h1>
-          <p className="text-[var(--color-muted-ash)] text-[var(--text-subheading)]">Complete your project details and payment.</p>
-        </div>
-
-        <div className="flex flex-col lg:flex-row gap-12 items-start">
-          {/* Form Section */}
-          <div className="flex-1 w-full">
-            <form onSubmit={handleCheckout} className="space-y-8">
-              
-              {/* Contact Info */}
-              <div className="bg-[var(--surface-canvas-white)] border border-[var(--color-midnight-ink)] border-opacity-[0.08] rounded-[var(--radius-xl)] p-8 shadow-[var(--shadow-sm)]">
-                <h3 className="text-[var(--text-heading-sm)] font-bold text-[var(--color-midnight-ink)] mb-8 tracking-[var(--tracking-heading-sm)]">Contact Information</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[var(--color-muted-ash)] text-[10px] font-bold uppercase tracking-widest">First Name</label>
-                    <input type="text" required className="w-full bg-[var(--color-whisper-gray)] border border-[var(--color-midnight-ink)] border-opacity-[0.08] rounded-[var(--radius-inputs)] px-4 py-3 text-[var(--color-midnight-ink)] focus:outline-none focus:border-opacity-30 transition-all font-medium" />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[var(--color-muted-ash)] text-[10px] font-bold uppercase tracking-widest">Last Name</label>
-                    <input type="text" required className="w-full bg-[var(--color-whisper-gray)] border border-[var(--color-midnight-ink)] border-opacity-[0.08] rounded-[var(--radius-inputs)] px-4 py-3 text-[var(--color-midnight-ink)] focus:outline-none focus:border-opacity-30 transition-all font-medium" />
-                  </div>
-                  <div className="md:col-span-2 flex flex-col gap-2">
-                    <label className="text-[var(--color-muted-ash)] text-[10px] font-bold uppercase tracking-widest">Email Address</label>
-                    <input type="email" required className="w-full bg-[var(--color-whisper-gray)] border border-[var(--color-midnight-ink)] border-opacity-[0.08] rounded-[var(--radius-inputs)] px-4 py-3 text-[var(--color-midnight-ink)] focus:outline-none focus:border-opacity-30 transition-all font-medium" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Payment Details */}
-              <div className="bg-[var(--surface-canvas-white)] border border-[var(--color-midnight-ink)] border-opacity-[0.08] rounded-[var(--radius-xl)] p-8 shadow-[var(--shadow-sm)]">
-                <h3 className="text-[var(--text-heading-sm)] font-bold text-[var(--color-midnight-ink)] mb-8 tracking-[var(--tracking-heading-sm)]">Payment Details</h3>
-                <div className="space-y-6">
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[var(--color-muted-ash)] text-[10px] font-bold uppercase tracking-widest">Card Number</label>
-                    <input type="text" placeholder="0000 0000 0000 0000" required className="w-full bg-[var(--color-whisper-gray)] border border-[var(--color-midnight-ink)] border-opacity-[0.08] rounded-[var(--radius-inputs)] px-4 py-3 text-[var(--color-midnight-ink)] focus:outline-none focus:border-opacity-30 transition-all font-medium" />
-                  </div>
-                  <div className="grid grid-cols-2 gap-6">
-                    <div className="flex flex-col gap-2">
-                      <label className="text-[var(--color-muted-ash)] text-[10px] font-bold uppercase tracking-widest">Expiry Date</label>
-                      <input type="text" placeholder="MM/YY" required className="w-full bg-[var(--color-whisper-gray)] border border-[var(--color-midnight-ink)] border-opacity-[0.08] rounded-[var(--radius-inputs)] px-4 py-3 text-[var(--color-midnight-ink)] focus:outline-none focus:border-opacity-30 transition-all font-medium" />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <label className="text-[var(--color-muted-ash)] text-[10px] font-bold uppercase tracking-widest">CVC</label>
-                      <input type="text" placeholder="123" required className="w-full bg-[var(--color-whisper-gray)] border border-[var(--color-midnight-ink)] border-opacity-[0.08] rounded-[var(--radius-inputs)] px-4 py-3 text-[var(--color-midnight-ink)] focus:outline-none focus:border-opacity-30 transition-all font-medium" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <button 
-                type="submit"
-                disabled={loading}
-                className="w-full bg-[var(--color-midnight-ink)] text-[var(--surface-canvas-white)] font-bold rounded-[var(--radius-buttons)] px-6 py-4 hover:opacity-90 transition-all flex items-center justify-center gap-2 shadow-[var(--shadow-subtle-3)]"
-              >
-                {loading ? "Processing..." : "Pay $1,198.00"}
-              </button>
-              
-              <div className="flex items-center justify-center gap-2 text-[var(--color-muted-ash)] text-[12px] font-bold uppercase tracking-widest">
-                <ShieldCheck size={16} />
-                <span>Secure encrypted payment</span>
-              </div>
-            </form>
+      <div style={{ minHeight: "100vh", background: "var(--color-whisper-gray)", paddingTop: "120px", paddingBottom: "96px" }}>
+        <div className="ir-container">
+          <div className="ir-page-header">
+            <h1 className="ir-page-title">Checkout</h1>
+            <p className="ir-page-subtitle">Complete your details and payment.</p>
           </div>
 
-          {/* Order Summary */}
-          <div className="w-full lg:w-[400px]">
-            <div className="bg-[var(--surface-canvas-white)] border border-[var(--color-midnight-ink)] border-opacity-[0.08] rounded-[var(--radius-xl)] p-8 sticky top-32 shadow-[var(--shadow-xl)]">
-              <h3 className="text-[var(--text-heading-sm)] font-bold text-[var(--color-midnight-ink)] mb-8 tracking-[var(--tracking-heading-sm)]">Order Summary</h3>
-              
-              <div className="space-y-6 mb-8">
-                <div className="flex justify-between items-start">
+          <div style={{ display: "flex", gap: "28px", alignItems: "flex-start", flexWrap: "wrap" }}>
+            {/* Form */}
+            <form onSubmit={handleSubmit} style={{ flex: 1, minWidth: "280px", display: "flex", flexDirection: "column", gap: "20px" }}>
+              {/* Contact */}
+              <div className="ir-card" style={{ padding: "28px" }}>
+                <h3 style={{ margin: "0 0 24px", fontSize: "var(--text-heading-sm)", fontWeight: "700", color: "var(--color-midnight-ink)" }}>
+                  Contact Information
+                </h3>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" }}>
                   <div>
-                    <h4 className="text-[var(--color-midnight-ink)] font-bold text-[16px]">Premium Logo Design</h4>
-                    <p className="text-[12px] text-[var(--color-muted-ash)] font-bold uppercase tracking-widest mt-1">Qty: 1</p>
+                    <label className="ir-label">First Name</label>
+                    <input type="text" className="ir-input" required />
                   </div>
-                  <span className="text-[var(--color-midnight-ink)] font-bold">$299.00</span>
-                </div>
-                <div className="flex justify-between items-start">
                   <div>
-                    <h4 className="text-[var(--color-midnight-ink)] font-bold text-[16px]">Landing Page Development</h4>
-                    <p className="text-[12px] text-[var(--color-muted-ash)] font-bold uppercase tracking-widest mt-1">Qty: 1</p>
+                    <label className="ir-label">Last Name</label>
+                    <input type="text" className="ir-input" required />
                   </div>
-                  <span className="text-[var(--color-midnight-ink)] font-bold">$899.00</span>
+                  <div style={{ gridColumn: "1 / -1" }}>
+                    <label className="ir-label">Email Address</label>
+                    <input type="email" className="ir-input" required />
+                  </div>
                 </div>
               </div>
 
-              <div className="h-[1px] bg-[var(--color-midnight-ink)] opacity-[0.08] my-6"></div>
-
-              <div className="space-y-4 mb-8">
-                <div className="flex justify-between text-[var(--color-muted-ash)] text-sm font-medium">
-                  <span>Subtotal</span>
-                  <span className="text-[var(--color-midnight-ink)] font-bold">$1,198.00</span>
-                </div>
-                <div className="flex justify-between text-[var(--color-muted-ash)] text-sm font-medium">
-                  <span>Tax</span>
-                  <span>$0.00</span>
+              {/* Payment */}
+              <div className="ir-card" style={{ padding: "28px" }}>
+                <h3 style={{ margin: "0 0 24px", fontSize: "var(--text-heading-sm)", fontWeight: "700", color: "var(--color-midnight-ink)" }}>
+                  Payment Details
+                </h3>
+                <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+                  <div>
+                    <label className="ir-label">Card Number</label>
+                    <input type="text" placeholder="0000 0000 0000 0000" className="ir-input" required />
+                  </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" }}>
+                    <div>
+                      <label className="ir-label">Expiry Date</label>
+                      <input type="text" placeholder="MM / YY" className="ir-input" required />
+                    </div>
+                    <div>
+                      <label className="ir-label">CVC</label>
+                      <input type="text" placeholder="123" className="ir-input" required />
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div className="h-[1px] bg-[var(--color-midnight-ink)] opacity-[0.08] my-6"></div>
-              
-              <div className="flex justify-between text-[var(--color-midnight-ink)] font-bold text-[24px] tracking-tight">
-                <span>Total</span>
-                <span>$1,198.00</span>
+              <button
+                type="submit"
+                disabled={loading}
+                className="ir-button ir-button-primary"
+                style={{ width: "100%", justifyContent: "center", padding: "16px", fontSize: "16px", opacity: loading ? 0.7 : 1 }}
+              >
+                {loading ? "Processing…" : `Pay $${total.toLocaleString()}`}
+              </button>
+
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", fontSize: "12px", color: "var(--color-muted-ash)", fontWeight: "600", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                <ShieldCheck size={14} />
+                Secure encrypted payment
+              </div>
+            </form>
+
+            {/* Summary */}
+            <div style={{ width: "320px", flexShrink: 0 }}>
+              <div className="ir-card" style={{ padding: "28px", position: "sticky", top: "120px", boxShadow: "var(--shadow-xl)" }}>
+                <h3 style={{ margin: "0 0 24px", fontSize: "var(--text-heading-sm)", fontWeight: "700", color: "var(--color-midnight-ink)" }}>
+                  Order Summary
+                </h3>
+                <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "20px" }}>
+                  {ORDER_ITEMS.map((item) => (
+                    <div key={item.name} style={{ display: "flex", justifyContent: "space-between" }}>
+                      <div>
+                        <div style={{ fontSize: "14px", fontWeight: "600", color: "var(--color-midnight-ink)" }}>{item.name}</div>
+                        <div style={{ fontSize: "11px", color: "var(--color-muted-ash)", marginTop: "2px" }}>Qty: {item.qty}</div>
+                      </div>
+                      <span style={{ fontSize: "14px", fontWeight: "600", color: "var(--color-midnight-ink)" }}>${item.price}</span>
+                    </div>
+                  ))}
+                </div>
+                <hr className="ir-divider" style={{ margin: "0 0 16px" }} />
+                <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "16px" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", color: "var(--color-muted-ash)" }}>
+                    <span>Subtotal</span>
+                    <span style={{ color: "var(--color-midnight-ink)", fontWeight: "600" }}>${total}</span>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", color: "var(--color-muted-ash)" }}>
+                    <span>Tax</span>
+                    <span>$0.00</span>
+                  </div>
+                </div>
+                <hr className="ir-divider" style={{ margin: "0 0 16px" }} />
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "20px", fontWeight: "700", color: "var(--color-midnight-ink)" }}>
+                  <span>Total</span>
+                  <span>${total.toLocaleString()}</span>
+                </div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
-    </div>
-    <Footer />
+      <Footer />
     </>
   );
 }
