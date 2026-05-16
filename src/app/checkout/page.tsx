@@ -105,7 +105,7 @@ export default function CheckoutPage() {
                 className="ir-button ir-button-primary"
                 style={{ width: "100%", justifyContent: "center", padding: "16px", fontSize: "16px", opacity: loading ? 0.7 : 1 }}
               >
-                {loading ? "Processing…" : `Pay $${total.toLocaleString()}`}
+                {loading ? "Processing…" : `Pay $${total.toLocaleString("en-US")}`}
               </button>
 
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", fontSize: "12px", color: "var(--color-muted-ash)", fontWeight: "600", textTransform: "uppercase", letterSpacing: "0.06em" }}>
@@ -145,7 +145,7 @@ export default function CheckoutPage() {
                 <hr className="ir-divider" style={{ margin: "0 0 16px" }} />
                 <div style={{ display: "flex", justifyContent: "space-between", fontSize: "20px", fontWeight: "700", color: "var(--color-midnight-ink)" }}>
                   <span>Total</span>
-                  <span>${total.toLocaleString()}</span>
+                  <span>${total.toLocaleString("en-US")}</span>
                 </div>
               </div>
             </div>
