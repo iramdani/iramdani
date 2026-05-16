@@ -81,7 +81,7 @@ export default function Home() {
           if (Math.abs(stripe.currentPos) >= stripe.length) {
             stripe.currentPos = 0;
           }
-          stripe.el.style.transform = `translate3d(0, \${stripe.currentPos}px, 0)`;
+          stripe.el.style.transform = "translate3d(0, " + stripe.currentPos + "px, 0)";
         });
         requestAnimationFrame(animateStripes);
       };
