@@ -19,6 +19,23 @@ export default function MainLayout({
         rel="stylesheet"
         type="text/css"
       />
+      {/* Kill Enzuzo cookie popup injected by Webflow */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        #ez-cookie-notification,
+        .enzuzo-cookie-notification,
+        #enzuzo-modal-wrapper,
+        .enzuzo-modal-overlay,
+        .enzuzo-cookie-icon.cookie-icon,
+        [id^="ez-cookie"],
+        [class^="enzuzo-"] {
+          display: none !important;
+          visibility: hidden !important;
+          pointer-events: none !important;
+          opacity: 0 !important;
+        }
+        /* Prevent body scroll-lock from Enzuzo */
+        body.modal-open { overflow: auto !important; }
+      `}} />
       <Header />
       <main>{children}</main>
       <Footer />

@@ -555,75 +555,118 @@ img, svg {
 }
 
 /* ============================================================
-   Dashboard / Admin Sidebar
+   Dashboard / Admin Sidebar — Amplemarket style
    ============================================================ */
 .ir-sidebar {
-  width: 240px;
+  width: 224px;
   flex-shrink: 0;
+  /* No hard border — use subtle shadow for depth */
   background: var(--color-canvas-white);
-  border-right: 1px solid rgba(17,17,17,0.07);
+  box-shadow: 1px 0 0 rgba(17,17,17,0.06);
   display: flex;
   flex-direction: column;
   height: 100vh;
   position: sticky;
   top: 0;
+  z-index: 10;
 }
 
 .ir-sidebar-header {
-  padding: 24px 20px;
-  border-bottom: 1px solid rgba(17,17,17,0.06);
+  padding: 20px 16px 16px;
+  /* No hard bottom border — spacing creates separation */
 }
 
 .ir-sidebar-nav {
   flex: 1;
-  padding: 12px 12px;
+  padding: 4px 8px;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+/* Section label inside nav */
+.ir-sidebar-section {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(17,17,17,0.3);
+  padding: 12px 10px 6px;
+  margin-top: 4px;
 }
 
 .ir-sidebar-link {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 9px 12px;
+  gap: 9px;
+  padding: 8px 10px;
   border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--color-muted-ash);
+  font-size: 13.5px;
+  font-weight: 400;
+  color: rgba(17,17,17,0.55);
   text-decoration: none;
-  transition: all 0.15s;
-  margin-bottom: 2px;
+  transition: background 0.12s, color 0.12s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: inherit;
+  width: 100%;
+  text-align: left;
 }
 
 .ir-sidebar-link:hover {
-  background: var(--color-whisper-gray);
+  background: rgba(17,17,17,0.04);
   color: var(--color-midnight-ink);
 }
 
-.ir-sidebar-link.active {
-  background: var(--color-whisper-gray);
+/* Active state: soft Amplemarket-style pill */
+.ir-sidebar-link.is-active,
+.ir-sidebar-link[data-active="true"] {
+  background: rgba(17,17,17,0.06);
   color: var(--color-midnight-ink);
   font-weight: 600;
 }
 
 .ir-sidebar-footer {
-  padding: 16px 12px;
-  border-top: 1px solid rgba(17,17,17,0.06);
+  padding: 12px 8px 16px;
+  border-top: 1px solid rgba(17,17,17,0.05);
+  margin-top: 4px;
 }
 
 /* ============================================================
-   Topbar
+   Topbar — clean, floating glassmorphism
    ============================================================ */
 .ir-topbar {
-  height: 60px;
-  background: rgba(255,255,255,0.9);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(17,17,17,0.07);
+  height: 56px;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(17,17,17,0.06);
   display: flex;
   align-items: center;
-  padding: 0 28px;
+  padding: 0 24px;
   position: sticky;
   top: 0;
-  z-index: 40;
+  z-index: 30;
+  gap: 12px;
+}
+
+/* ============================================================
+   Enzuzo / Cookie consent — hide (we use our own)
+   ============================================================ */
+#ez-cookie-notification,
+.enzuzo-cookie-notification,
+#enzuzo-modal-wrapper,
+.enzuzo-modal-overlay,
+.enzuzo-cookie-icon,
+.cookie-icon.enzuzo-cookie-icon {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 /* ============================================================
