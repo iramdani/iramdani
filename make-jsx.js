@@ -55,7 +55,41 @@ export default function Home() {
     
     const wrapper = document.querySelector('.am-page-wrapper');
     if (wrapper) {
+      // Testimonial Scroll Logic
+      const stripes: any[] = [];
+      const stripeEls = document.querySelectorAll(".am-social-proof-stripe");
+      
+      stripeEls.forEach((el: any) => {
+        const stripeObj = {
+          el: el,
+          speed: 0.8,
+          targetSpeed: 0.8,
+          currentPos: 0,
+          length: el.offsetHeight / 2, // Assuming duplicated content for marquee
+        };
+        stripes.push(stripeObj);
+
+        el.addEventListener("mouseenter", () => { stripeObj.targetSpeed = 0; });
+        el.addEventListener("mouseleave", () => { stripeObj.targetSpeed = 0.8; });
+      });
+
+      const animateStripes = () => {
+        stripes.forEach(stripe => {
+          stripe.speed += (stripe.targetSpeed - stripe.speed) * 0.05;
+          stripe.currentPos -= stripe.speed; // Scroll upwards
+          
+          if (Math.abs(stripe.currentPos) >= stripe.length) {
+            stripe.currentPos = 0;
+          }
+          stripe.el.style.transform = `translate3d(0, \${stripe.currentPos}px, 0)`;
+        });
+        requestAnimationFrame(animateStripes);
+      };
+      
+      if (stripes.length > 0) animateStripes();
+
       const scripts = wrapper.querySelectorAll('script');
+      // ... rest of script logic
       scripts.forEach(oldScript => {
         try {
           if (oldScript.src) return; 
