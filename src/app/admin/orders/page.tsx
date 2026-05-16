@@ -12,33 +12,35 @@ export default function AdminOrdersPage() {
   ]);
 
   return (
-    <div>
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+    <div className="font-[var(--font-labil-grotesk-variable)] animate-in fade-in duration-500">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-10 gap-6">
         <div>
-          <h1 className="text-3xl font-bold text-white mb-2">Order Management</h1>
-          <p className="text-gray-400">View and manage customer orders.</p>
+          <h1 className="text-[var(--text-heading-lg)] font-bold text-[var(--color-midnight-ink)] mb-2 tracking-[var(--tracking-heading-lg)] leading-[var(--leading-heading-lg)]">
+            Order Management
+          </h1>
+          <p className="text-[var(--color-muted-ash)] text-[var(--text-subheading)]">View and manage customer orders.</p>
         </div>
         
-        <div className="flex gap-3">
-          <button className="flex items-center gap-2 px-4 py-2 bg-[#111111] border border-white/10 rounded-xl text-sm font-medium text-white hover:bg-white/5 transition-colors">
+        <div className="flex gap-4">
+          <button className="flex items-center gap-2 px-6 py-2.5 bg-[var(--surface-canvas-white)] border border-[var(--color-midnight-ink)] border-opacity-[0.08] rounded-[var(--radius-buttons)] text-[14px] font-bold text-[var(--color-midnight-ink)] hover:bg-[var(--color-whisper-gray)] transition-all shadow-[var(--shadow-subtle)]">
             <Filter size={16} />
             Filter
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 bg-white text-black rounded-xl text-sm font-medium hover:bg-gray-100 transition-colors">
+          <button className="flex items-center gap-2 px-6 py-2.5 bg-[var(--color-midnight-ink)] text-[var(--surface-canvas-white)] rounded-[var(--radius-buttons)] text-[14px] font-bold hover:opacity-90 transition-all shadow-[var(--shadow-subtle-3)]">
             Export CSV
           </button>
         </div>
       </div>
 
-      <div className="bg-[#111111] border border-white/10 rounded-2xl overflow-hidden">
+      <div className="bg-[var(--surface-canvas-white)] border border-[var(--color-midnight-ink)] border-opacity-[0.08] rounded-[var(--radius-xl)] overflow-hidden shadow-[var(--shadow-sm)]">
         {/* Search Bar */}
-        <div className="p-4 border-b border-white/10">
+        <div className="p-6 border-b border-[var(--color-midnight-ink)] border-opacity-[0.08]">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--color-muted-ash)]" size={18} />
             <input 
               type="text" 
               placeholder="Search orders by ID, customer name, or service..."
-              className="w-full bg-[#1A1A1A] border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all text-sm"
+              className="w-full bg-[var(--color-whisper-gray)] border border-[var(--color-midnight-ink)] border-opacity-[0.08] rounded-[var(--radius-inputs)] pl-12 pr-4 py-3 text-[var(--color-midnight-ink)] focus:outline-none focus:border-opacity-30 transition-all text-sm font-medium"
             />
           </div>
         </div>
@@ -47,45 +49,45 @@ export default function AdminOrdersPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-[#1A1A1A] border-b border-white/10">
-                <th className="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Order ID</th>
-                <th className="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Customer</th>
-                <th className="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Service</th>
-                <th className="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Amount</th>
-                <th className="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Date</th>
-                <th className="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Status</th>
-                <th className="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider text-right">Actions</th>
+              <tr className="bg-[var(--color-whisper-gray)] bg-opacity-50 border-b border-[var(--color-midnight-ink)] border-opacity-[0.08]">
+                <th className="px-6 py-4 text-[10px] font-bold text-[var(--color-muted-ash)] uppercase tracking-widest">Order ID</th>
+                <th className="px-6 py-4 text-[10px] font-bold text-[var(--color-muted-ash)] uppercase tracking-widest">Customer</th>
+                <th className="px-6 py-4 text-[10px] font-bold text-[var(--color-muted-ash)] uppercase tracking-widest">Service</th>
+                <th className="px-6 py-4 text-[10px] font-bold text-[var(--color-muted-ash)] uppercase tracking-widest">Amount</th>
+                <th className="px-6 py-4 text-[10px] font-bold text-[var(--color-muted-ash)] uppercase tracking-widest">Date</th>
+                <th className="px-6 py-4 text-[10px] font-bold text-[var(--color-muted-ash)] uppercase tracking-widest">Status</th>
+                <th className="px-6 py-4 text-[10px] font-bold text-[var(--color-muted-ash)] uppercase tracking-widest text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5">
+            <tbody className="divide-y divide-[var(--color-midnight-ink)] divide-opacity-[0.04]">
               {orders.map((order) => (
-                <tr key={order.id} className="hover:bg-white/[0.02] transition-colors">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">{order.id}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{order.customer}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{order.service}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">{order.amount}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{order.date}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border ${
-                      order.status === 'Completed' ? 'bg-green-500/10 text-green-400 border-green-500/20' :
-                      order.status === 'Processing' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' :
-                      'bg-orange-500/10 text-orange-400 border-orange-500/20'
+                <tr key={order.id} className="hover:bg-[var(--color-whisper-gray)] transition-colors group">
+                  <td className="px-6 py-5 whitespace-nowrap text-sm font-bold text-[var(--color-midnight-ink)]">{order.id}</td>
+                  <td className="px-6 py-5 whitespace-nowrap text-sm text-[var(--color-muted-ash)] font-medium">{order.customer}</td>
+                  <td className="px-6 py-5 whitespace-nowrap text-sm text-[var(--color-muted-ash)] font-medium">{order.service}</td>
+                  <td className="px-6 py-5 whitespace-nowrap text-sm font-bold text-[var(--color-midnight-ink)]">{order.amount}</td>
+                  <td className="px-6 py-5 whitespace-nowrap text-sm text-[var(--color-muted-ash)]">{order.date}</td>
+                  <td className="px-6 py-5 whitespace-nowrap">
+                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${
+                      order.status === 'Completed' ? 'bg-[var(--color-deliver-green)] bg-opacity-10 text-[var(--color-deliver-green)]' :
+                      order.status === 'Processing' ? 'bg-[var(--color-intelligence-blue)] bg-opacity-10 text-[var(--color-intelligence-blue)]' :
+                      'bg-[var(--color-leadgen-red)] bg-opacity-10 text-[var(--color-leadgen-red)]'
                     }`}>
                       {order.status}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <div className="flex items-center justify-end gap-2">
-                      <button className="p-1.5 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors" title="View Details">
+                  <td className="px-6 py-5 whitespace-nowrap text-right text-sm font-medium">
+                    <div className="flex items-center justify-end gap-3">
+                      <button className="p-2 text-[var(--color-muted-ash)] hover:text-[var(--color-midnight-ink)] hover:bg-[var(--color-light-taupe)] rounded-[var(--radius-lg)] transition-all" title="View Details">
                         <Eye size={18} />
                       </button>
-                      <button className="p-1.5 text-gray-400 hover:text-green-400 hover:bg-green-500/10 rounded-lg transition-colors" title="Mark Completed">
+                      <button className="p-2 text-[var(--color-muted-ash)] hover:text-[var(--color-deliver-green)] hover:bg-[var(--color-deliver-green)] hover:bg-opacity-10 rounded-[var(--radius-lg)] transition-all" title="Mark Completed">
                         <CheckCircle size={18} />
                       </button>
-                      <button className="p-1.5 text-gray-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors" title="Cancel Order">
+                      <button className="p-2 text-[var(--color-muted-ash)] hover:text-[var(--color-leadgen-red)] hover:bg-[var(--color-leadgen-red)] hover:bg-opacity-10 rounded-[var(--radius-lg)] transition-all" title="Cancel Order">
                         <XCircle size={18} />
                       </button>
-                      <button className="p-1.5 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors" title="More Options">
+                      <button className="p-2 text-[var(--color-muted-ash)] hover:text-[var(--color-midnight-ink)] hover:bg-[var(--color-light-taupe)] rounded-[var(--radius-lg)] transition-all" title="More Options">
                         <MoreVertical size={18} />
                       </button>
                     </div>
@@ -97,12 +99,12 @@ export default function AdminOrdersPage() {
         </div>
         
         {/* Pagination */}
-        <div className="p-4 border-t border-white/10 flex items-center justify-between text-sm text-gray-400">
+        <div className="p-6 border-t border-[var(--color-midnight-ink)] border-opacity-[0.08] flex items-center justify-between text-[12px] font-bold text-[var(--color-muted-ash)]">
           <div>Showing 1 to 4 of 4 entries</div>
           <div className="flex gap-2">
-            <button className="px-3 py-1 border border-white/10 rounded-lg hover:bg-white/5 disabled:opacity-50" disabled>Previous</button>
-            <button className="px-3 py-1 bg-white/10 border border-white/20 text-white rounded-lg">1</button>
-            <button className="px-3 py-1 border border-white/10 rounded-lg hover:bg-white/5 disabled:opacity-50" disabled>Next</button>
+            <button className="px-4 py-2 border border-[var(--color-midnight-ink)] border-opacity-[0.08] rounded-[var(--radius-lg)] hover:bg-[var(--color-whisper-gray)] disabled:opacity-50 transition-all uppercase tracking-widest" disabled>Previous</button>
+            <button className="px-4 py-2 bg-[var(--color-midnight-ink)] text-white rounded-[var(--radius-lg)] shadow-[var(--shadow-subtle-3)]">1</button>
+            <button className="px-4 py-2 border border-[var(--color-midnight-ink)] border-opacity-[0.08] rounded-[var(--radius-lg)] hover:bg-[var(--color-whisper-gray)] disabled:opacity-50 transition-all uppercase tracking-widest" disabled>Next</button>
           </div>
         </div>
       </div>

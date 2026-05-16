@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { fetchAPI } from "@/lib/api";
 import { Activity, CreditCard, Package, TrendingUp } from "lucide-react";
 
 export default function DashboardPage() {
@@ -16,11 +15,7 @@ export default function DashboardPage() {
   useEffect(() => {
     async function loadDashboard() {
       try {
-        // Example integration with NextCuan API
-        // const res = await fetchAPI("getDashboardStats");
-        // if (res.success) setStats(res.data);
-        
-        // Mock data for now since we haven't authenticated
+        // Mock data
         setTimeout(() => {
           setStats({
             totalOrders: 12,
@@ -33,7 +28,7 @@ export default function DashboardPage() {
             ]
           });
           setLoading(false);
-        }, 1000);
+        }, 800);
       } catch (err) {
         console.error(err);
         setLoading(false);
@@ -46,75 +41,66 @@ export default function DashboardPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="w-8 h-8 border-4 border-purple-500/20 border-t-purple-500 rounded-full animate-spin"></div>
+        <div className="w-10 h-10 border-4 border-[var(--color-midnight-ink)] border-opacity-10 border-t-[var(--color-midnight-ink)] rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
-    <div>
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">Dashboard</h1>
-        <p className="text-gray-400">Welcome back! Here's an overview of your account.</p>
+    <div className="font-[var(--font-labil-grotesk-variable)] animate-in fade-in duration-500">
+      <div className="mb-10">
+        <h1 className="text-[var(--text-heading-lg)] font-bold text-[var(--color-midnight-ink)] mb-2 tracking-[var(--tracking-heading-lg)] leading-[var(--leading-heading-lg)]">
+            Dashboard
+        </h1>
+        <p className="text-[var(--color-muted-ash)] text-[var(--text-subheading)]">
+            Welcome back! Here's an overview of your account.
+        </p>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div className="bg-[#111111] border border-white/10 rounded-2xl p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-gray-400 font-medium">Total Orders</h3>
-            <div className="p-2 bg-purple-500/10 text-purple-400 rounded-lg">
-              <Package size={20} />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[var(--spacing-24)] mb-10">
+        {[
+            { label: "Total Orders", value: stats.totalOrders, icon: <Package size={20} />, color: "var(--color-intelligence-blue)" },
+            { label: "Active Projects", value: stats.activeProjects, icon: <Activity size={20} />, color: "var(--color-deliver-green)" },
+            { label: "Total Spent", value: stats.totalSpent, icon: <CreditCard size={20} />, color: "var(--color-leadgen-red)" },
+            { label: "Activity Level", value: "High", icon: <TrendingUp size={20} />, color: "var(--color-engagement-gold)" }
+        ].map((stat, i) => (
+            <div key={i} className="bg-[var(--surface-canvas-white)] border border-[var(--color-midnight-ink)] border-opacity-[0.08] rounded-[var(--radius-xl)] p-6 shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-subtle-3)] transition-all group">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-[var(--color-muted-ash)] font-bold text-[10px] uppercase tracking-widest">{stat.label}</h3>
+                <div 
+                    className="p-2 rounded-[var(--radius-lg)] shadow-inner transition-transform group-hover:scale-110"
+                    style={{ backgroundColor: `${stat.color}15`, color: stat.color }}
+                >
+                  {stat.icon}
+                </div>
+              </div>
+              <div className="text-[var(--text-heading)] font-bold text-[var(--color-midnight-ink)] tracking-[var(--tracking-heading)]">
+                {stat.value}
+              </div>
             </div>
-          </div>
-          <div className="text-3xl font-bold text-white">{stats.totalOrders}</div>
-        </div>
-        
-        <div className="bg-[#111111] border border-white/10 rounded-2xl p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-gray-400 font-medium">Active Projects</h3>
-            <div className="p-2 bg-blue-500/10 text-blue-400 rounded-lg">
-              <Activity size={20} />
-            </div>
-          </div>
-          <div className="text-3xl font-bold text-white">{stats.activeProjects}</div>
-        </div>
-
-        <div className="bg-[#111111] border border-white/10 rounded-2xl p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-gray-400 font-medium">Total Spent</h3>
-            <div className="p-2 bg-green-500/10 text-green-400 rounded-lg">
-              <CreditCard size={20} />
-            </div>
-          </div>
-          <div className="text-3xl font-bold text-white">{stats.totalSpent}</div>
-        </div>
-
-        <div className="bg-[#111111] border border-white/10 rounded-2xl p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-gray-400 font-medium">Activity Level</h3>
-            <div className="p-2 bg-orange-500/10 text-orange-400 rounded-lg">
-              <TrendingUp size={20} />
-            </div>
-          </div>
-          <div className="text-3xl font-bold text-white">High</div>
-        </div>
+        ))}
       </div>
 
       {/* Recent Activity */}
-      <div className="bg-[#111111] border border-white/10 rounded-2xl p-6">
-        <h2 className="text-xl font-bold text-white mb-6">Recent Activity</h2>
-        <div className="space-y-6">
+      <div className="bg-[var(--surface-canvas-white)] border border-[var(--color-midnight-ink)] border-opacity-[0.08] rounded-[var(--radius-xl)] p-8 shadow-[var(--shadow-sm)]">
+        <h2 className="text-[var(--text-heading-sm)] font-bold text-[var(--color-midnight-ink)] mb-8 tracking-[var(--tracking-heading-sm)]">
+            Recent Activity
+        </h2>
+        <div className="space-y-8">
           {stats.recentActivity.map((item: any, i: number) => (
-            <div key={item.id} className="flex gap-4 relative">
+            <div key={item.id} className="flex gap-6 relative group">
               {i !== stats.recentActivity.length - 1 && (
-                <div className="absolute left-[11px] top-8 bottom-[-24px] w-px bg-white/10"></div>
+                <div className="absolute left-[11px] top-8 bottom-[-32px] w-[1px] bg-[var(--color-midnight-ink)] opacity-[0.08]"></div>
               )}
-              <div className="w-6 h-6 rounded-full bg-purple-500/20 border border-purple-500/50 flex-shrink-0 mt-1"></div>
-              <div>
-                <p className="text-white font-medium">{item.action}</p>
-                <p className="text-gray-400 text-sm mt-1">{item.detail}</p>
-                <p className="text-gray-500 text-xs mt-2">{item.time}</p>
+              <div className="w-6 h-6 rounded-full bg-[var(--color-light-taupe)] border border-[var(--color-midnight-ink)] border-opacity-[0.08] flex-shrink-0 mt-1 z-10 transition-colors group-hover:bg-[var(--color-midnight-ink)] group-hover:border-[var(--color-midnight-ink)]"></div>
+              <div className="flex-1">
+                <div className="flex items-center justify-between">
+                    <p className="text-[var(--color-midnight-ink)] font-bold text-[16px]">{item.action}</p>
+                    <p className="text-[var(--color-muted-ash)] text-[10px] uppercase font-bold tracking-widest">{item.time}</p>
+                </div>
+                <p className="text-[var(--color-muted-ash)] text-[14px] mt-1 leading-[var(--leading-body)]">{item.detail}</p>
+                <div className="h-[1px] bg-[var(--color-midnight-ink)] opacity-[0.04] w-full mt-6" />
               </div>
             </div>
           ))}
